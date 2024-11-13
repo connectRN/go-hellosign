@@ -18,7 +18,7 @@ import (
 //   - signatureRequestId The id of the SignatureRequest to retrieve.
 //   - fileType Set to "pdf" for a single merged document or "zip" for a collection of individual documents.
 func (c *Client) DownloadFiles(ctx context.Context, signatureRequestID, fileType string) ([]byte, error) {
-	furl := fmt.Sprintf("%s/v3/signature_request/files/%s", c.baseURL, url.PathEscape(signatureRequestID))
+	furl := fmt.Sprintf("%s/signature_request/files/%s", c.baseURL, url.PathEscape(signatureRequestID))
 	if fileType != "" {
 		furl += "?file_type=" + url.QueryEscape(fileType)
 	}
@@ -37,7 +37,7 @@ func (c *Client) DownloadFiles(ctx context.Context, signatureRequestID, fileType
 // Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests
 // can only be signed on Dropbox Sign.
 func (c *Client) CreateEmbeddedWithTemplate(ctx context.Context, r model.CreateEmbeddedWithTemplateRequest) (*model.SignatureRequestGetResponse, error) {
-	furl := fmt.Sprintf("%s/v3/signature_request/create_embedded_with_template", c.baseURL)
+	furl := fmt.Sprintf("%s/signature_request/create_embedded_with_template", c.baseURL)
 	req, err := c.newJSONRequest(ctx, http.MethodPost, furl, r)
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ func (c *Client) CreateEmbeddedWithTemplate(ctx context.Context, r model.CreateE
 // Parameters:
 //   - signatureId The id of the signature to get a signature url for.
 func (c *Client) GetEmbeddedSignURL(ctx context.Context, signatureID string) (*model.EmbeddedSignUrlResponse, error) {
-	furl := fmt.Sprintf("%s/v3/embedded/sign_url/%s", c.baseURL, url.PathEscape(signatureID))
+	furl := fmt.Sprintf("%s/embedded/sign_url/%s", c.baseURL, url.PathEscape(signatureID))
 	req, err := c.newJSONRequest(ctx, http.MethodPost, furl, nil)
 	if err != nil {
 		return nil, err
