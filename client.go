@@ -21,6 +21,11 @@ type API interface {
 	//   - fileType Set to "pdf" for a single merged document or "zip" for a collection of individual documents.
 	DownloadFiles(ctx context.Context, signatureRequestID, fileType string) ([]byte, error)
 
+	// Returns the status of the SignatureRequest specified by the signature_request_id parameter.
+	// Parameters:
+	//   - signatureRequestID The id of the SignatureRequest to retrieve.
+	GetSignatureRequest(ctx context.Context, signatureRequestID string) (*model.SignatureRequestGetResponse, error)
+
 	// Create Embedded Signature Request with Template
 	// Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame.
 	// Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests
