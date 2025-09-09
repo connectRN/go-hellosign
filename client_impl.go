@@ -32,6 +32,20 @@ func (c *Client) DownloadFiles(ctx context.Context, signatureRequestID, fileType
 	return data, err
 }
 
+// Returns the status of the SignatureRequest specified by the signature_request_id parameter.
+// Parameters:
+//   - signatureRequestID The id of the SignatureRequest to retrieve.
+func (c *Client) GetSignatureRequest(ctx context.Context, signatureRequestID string) (*model.SignatureRequestGetResponse, error) {
+	furl := fmt.Sprintf("%s/signature_request/%s", c.baseURL, url.PathEscape(signatureRequestID))
+	req, err := c.newJSONRequest(ctx, http.MethodGet, furl, nil)
+	if err != nil {
+		return nil, err
+	}
+	var resp model.SignatureRequestGetResponse
+	err = c.doRequest(req, &resp)
+	return &resp, err
+}
+
 // Create Embedded Signature Request with Template
 // Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame.
 // Note that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests
